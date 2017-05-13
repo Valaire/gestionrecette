@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- doc https://logging.apache.org/log4j/2.x/manual/appenders.html#RollingFileAppender
+	%c	le nom du logger qui a émis le message
+	%C	le nom de la classe qui a émis le message
+	%d	le timestamp de l'émission du message
+	%m	le message
+	%n	un retour chariot
+	%p	la priorité du message
+	%r	le nombre de milliseconde écoulé entre le lancement de l'application et l'émission du message
+	%t	le nom du thread
+	%x	NDC du thread
+	%%	le caractère %
+ -->
+<Configuration status="DEBUG" name="gestionrecette-ws" >
+	<Properties>
+		<Property name="log-path">logs</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="RollingFile" fileName="${log-path}/gestionrecette.log" filePattern="${log-path}/$${date:yyyy-MM-dd}/gestionrecette-%d{yyyy-MM-dd}-%i.log" >
+			<PatternLayout>
+				<pattern>%d{dd/MMM/yyyy HH:mm:ss,SSS}- %C %L: %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggeringPolicy /> 
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+			<DefaultRolloverStrategy max="5"/>
+		</RollingFile>
+		
+		<Console name="Console" target="SYSTEM_OUT">
+     		<PatternLayout pattern="%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n"/>
+    	</Console>
+    
+	</Appenders>
+	<Loggers>
+		<Logger name="root" level="debug" additivity="false">
+			<AppenderRef ref="RollingFile" level="debug"/>
+			<AppenderRef ref="Console" level="debug"/>
+		</Logger>
+		
+	</Loggers>
+</Configuration>
